@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="bs">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventura – Laptop</title>
+    <style>
+        :root {
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --line: #e5e7eb;
+            --text: #0f172a;
+            --muted: #6b7280;
+            --accent: #2563eb;
+        }
+        body { margin:0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+        header { background:#fff;border-bottom:1px solid #e5e7eb;padding:.9rem 1.5rem;display:flex;justify-content:space-between;align-items:center; }
+        a.nav { text-decoration:none;color:#475569;margin-left:1rem; }
+        a.nav:hover { color: var(--accent); }
+        .wrap { max-width: 1050px; margin: 1.9rem auto 2.4rem; padding: 0 1.1rem; display: grid; grid-template-columns: 1.15fr .85fr; gap: 1.3rem; }
+        .card { background: #fff; border: 1px solid #e5e7eb; border-radius: .9rem; padding: 1rem 1.1rem 1.2rem; }
+        h2 { margin-top: 0; }
+        .meta { color: var(--muted); font-size: .8rem; }
+        ul { margin-top: .5rem; }
+        .empty { color: #ef4444; font-size:.8rem; }
+        label { display:block; margin-bottom:.4rem; font-size:.8rem; }
+        select, button { width: 100%; padding: .55rem .5rem; border-radius: .5rem; border: 1px solid #d1d5db; }
+        button { background: var(--accent); color:#fff; border:none; font-weight:500; margin-top:.6rem; cursor:pointer; }
+        button:hover { filter:brightness(1.02); }
+        @media (max-width: 950px) {
+            .wrap { display:block; }
+            .card { margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div><strong>Laptop Store · Inventura</strong></div>
+    <nav>
+        <a class="nav" th:href="@{/laptops}">← Nazad</a>
+        <a class="nav" th:href="@{/accessories}">Accessories</a>
+    </nav>
+</header>
+
+<div class="wrap">
+    <div class="card">
+        <h2 th:text="${laptop.brand} + ' ' + laptop.model">Lenovo IdeaPad 5</h2>
+        <p class="meta">
+            CPU: <span th:text="${laptop.cpu}">i5</span> ·
+            RAM: <span th:text="${laptop.ram}">16GB</span> ·
+            Storage: <span th:text="${laptop.storage}">512GB SSD</span><br/>
+            Cijena: <strong th:text="${laptop.price} + ' KM'">1350 KM</strong><br/>
+            Na stanju: <strong th:text="${laptop.stock} + ' kom'">5 kom</strong>
+        </p>
+        <h3>Dodijeljena oprema</h3>
+        <ul th:if="${!#lists.isEmpty(laptop.accessories)}">
+            <li th:each="acc : ${laptop.accessories}"
+                th:text="${acc.name} + ' (' + acc.type + ')'"></li>
+        </ul>
+        <p th:if="${#lists.isEmpty(laptop.accessories)}" class="empty">Ovaj laptop trenutno nema dodijeljenu dodatnu opremu.</p>
+    </div>
+
+    <div class="card">
+        <h3>Dodaj accessory</h3>
+        <form th:action="@{'/laptops/action/' + ${laptop.id} + '/add'}" method="post">
+            <label for="accessoryId">Odaberi iz liste</label>
+            <select id="accessoryId" name="accessoryId" required>
+                <option value="" disabled selected>-- odaberi --</option>
+                <option th:each="a : ${allAccessories}"
+                        th:value="${a.id}"
+                        th:text="${a.name} + ' – ' + a.price + ' KM'"></option>
+            </select>
+            <button type="submit">Dodaj</button>
+        </form>
+        <p class="meta">Nakon dodavanja bićeš vraćen na ovaj ekran.</p>
+    </div>
+</div>
+</body>
+</html>

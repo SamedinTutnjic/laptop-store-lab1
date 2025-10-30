@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="bs">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventura – Accessories</title>
+    <style>
+        :root {
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --line: #e5e7eb;
+            --text: #0f172a;
+            --muted: #6b7280;
+            --accent: #2563eb;
+        }
+        body { margin:0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+        header { background:#fff;border-bottom:1px solid #e5e7eb;padding:.9rem 1.5rem;display:flex;justify-content:space-between;align-items:center; }
+        a.nav { text-decoration:none;color:#475569;margin-left:1rem; }
+        a.nav.active { color:var(--accent);font-weight:600; }
+        .wrap { max-width: 950px; margin: 1.7rem auto 2.2rem; padding: 0 1.1rem; }
+        h2 { margin-bottom: .3rem; }
+        p.sub { color: var(--muted); margin-bottom: 1rem; font-size: .85rem; }
+        table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #e5e7eb; border-radius: .8rem; overflow: hidden; }
+        th, td { padding: .6rem .75rem; border-bottom: 1px solid #edf2f7; text-align:left; }
+        th { font-size: .7rem; text-transform:uppercase; color:#94a3b8; }
+        tr:hover { background: #eff6ff; }
+        .pill { display:inline-block;background: rgba(37,99,235,.08);color:#1d4ed8;padding:.1rem .5rem;border-radius:999px;font-size:.68rem; }
+        /* forma */
+        .add-box { background:#fff;border:1px solid #e5e7eb;border-radius:.8rem;padding:.6rem .8rem .4rem;margin-bottom:1rem; }
+        .add-form { display:flex;flex-wrap:wrap;gap:.5rem; }
+        .add-form input { padding:.45rem .5rem;border:1px solid #d1d5db;border-radius:.4rem;font-size:.78rem; }
+        .add-form button { background:#2563eb;color:#fff;border:none;border-radius:.4rem;padding:.45rem .9rem;font-weight:500;cursor:pointer; }
+        @media (max-width: 850px) {
+            table, thead, tbody, tr, th, td { display:block; }
+            thead { display:none; }
+            td { padding:.5rem 1rem; }
+            td::before {
+                content: attr(data-label);
+                display:block;
+                font-size:.65rem;
+                text-transform:uppercase;
+                color:#94a3b8;
+            }
+            .add-form { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div><strong>Laptop Store · Inventura</strong></div>
+    <nav>
+        <a class="nav" th:href="@{/laptops}">Laptops</a>
+        <a class="nav active" th:href="@{/accessories}">Accessories</a>
+    </nav>
+</header>
+
+<div class="wrap">
+    <h2>Dodatna oprema</h2>
+    <p class="sub">Ovo su accessory zapisi koji se koriste i na formi za dodjelu dodataka laptopu.</p>
+
+    <!-- FORMA: DODAJ ACCESSORY -->
+    <div class="add-box">
+        <h3 style="margin-top:0;font-size:.9rem;">Dodaj accessory</h3>
+        <form class="add-form" action="/accessories/add" method="post">
+            <input name="name" placeholder="Naziv" required>
+            <input name="type" placeholder="Tip (mouse, bag...)" required>
+            <input name="brand" placeholder="Brand" required>
+            <input name="price" type="number" step="0.01" placeholder="Cijena KM" required>
+            <button type="submit">Dodaj</button>
+        </form>
+        <p style="color:#94a3b8;font-size:.7rem;margin-top:.3rem;">* Podaci se čuvaju dok je aplikacija pokrenuta.</p>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Naziv</th>
+            <th>Tip</th>
+            <th>Brand</th>
+            <th>Cijena</th>
+            <th>Stanje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="a : ${accessories}">
+            <td data-label="#" th:text="${a.id}">1</td>
+            <td data-label="Naziv" th:text="${a.name}">Logitech M185</td>
+            <td data-label="Tip"><span class="pill" th:text="${a.type}">Mouse</span></td>
+            <td data-label="Brand" th:text="${a.brand}">Logitech</td>
+            <td data-label="Cijena" th:text="${a.price} + ' KM'">25 KM</td>
+            <td data-label="Stanje" th:text="${10 - a.id} + ' kom'">9 kom</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

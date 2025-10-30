@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="bs">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventura – Laptopi</title>
+    <style>
+        :root {
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --line: #e5e7eb;
+            --text: #0f172a;
+            --muted: #6b7280;
+            --accent: #2563eb;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+        header {
+            background: #fff;
+            border-bottom: 1px solid #e5e7eb;
+            padding: .9rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .brand { font-weight: 600; }
+        nav a {
+            text-decoration: none;
+            color: #475569;
+            margin-left: 1rem;
+        }
+        nav a.active {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .wrapper {
+            max-width: 1100px;
+            margin: 1.5rem auto 2.5rem;
+            padding: 0 1.1rem;
+        }
+        .page-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .page-title h1 { margin: 0; font-size: 1.4rem; }
+        .sub { color: var(--muted); font-size: .85rem; }
+        .table-card {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: .9rem;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(15,23,42,.03);
+        }
+        table { width: 100%; border-collapse: collapse; }
+        thead { background: #f8fafc; }
+        th, td {
+            padding: .75rem .7rem;
+            border-bottom: 1px solid #edf2f7;
+            text-align: left;
+        }
+        th {
+            font-size: .72rem;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            color: #94a3b8;
+        }
+        tbody tr:hover { background: #eff6ff; }
+        .price { font-weight: 600; }
+        .qty-pill {
+            display: inline-block;
+            background: rgba(37,99,235,.08);
+            color: #1d4ed8;
+            padding: .15rem .65rem;
+            border-radius: 9999px;
+            font-size: .65rem;
+            font-weight: 500;
+        }
+        .badge {
+            display: inline-block;
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: .05rem .5rem;
+            border-radius: .4rem;
+            font-size: .65rem;
+        }
+
+        /* 🔵 Dugme "Otvori" */
+        .btn-open {
+            display: inline-block;
+            background: #2563eb;
+            color: #fff !important;
+            padding: 6px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: background 0.2s ease, transform 0.1s ease;
+        }
+        .btn-open:hover {
+            background: #1e40af;
+            transform: scale(1.03);
+        }
+
+        /* Forma */
+        .add-box {
+            background:#fff;
+            border:1px solid #e5e7eb;
+            border-radius:.9rem;
+            padding:.7rem .9rem .35rem;
+            margin-bottom:1rem;
+        }
+        .add-form {
+            display:flex;
+            gap:.5rem;
+            flex-wrap:wrap;
+        }
+        .add-form input {
+            padding:.45rem .5rem;
+            border:1px solid #d1d5db;
+            border-radius:.4rem;
+            font-size:.78rem;
+        }
+        .add-form button {
+            background:#2563eb;
+            color:#fff;
+            border:none;
+            border-radius:.4rem;
+            padding:.45rem .9rem;
+            font-weight:500;
+            cursor:pointer;
+        }
+        @media (max-width: 900px) {
+            table, thead, tbody, tr, th, td { display: block; }
+            thead { display: none; }
+            tr { border-bottom: 1px solid #e5e7eb; }
+            td { padding: .5rem 1rem; }
+            td::before {
+                content: attr(data-label);
+                display: block;
+                font-size: .65rem;
+                text-transform: uppercase;
+                color: #94a3b8;
+            }
+            .add-form { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="brand">Laptop Store · Inventura</div>
+    <nav>
+        <a th:href="@{/laptops}" class="active">Laptops</a>
+        <a th:href="@{/accessories}">Accessories</a>
+    </nav>
+</header>
+
+<div class="wrapper">
+    <div class="page-title">
+        <div>
+            <h1>Stanje laptopa</h1>
+            <p class="sub">Inventura laptopa i njihove dodatne opreme.</p>
+        </div>
+    </div>
+
+    <!-- FORMA: DODAJ NOVI LAPTOP -->
+    <div class="add-box">
+        <h3 style="margin-top:0;font-size:.9rem;">Dodaj novi laptop</h3>
+        <form class="add-form" action="/laptops/add" method="post">
+            <input name="brand" placeholder="Brand" required>
+            <input name="modelName" placeholder="Model" required>
+            <input name="price" type="number" step="0.01" placeholder="Cijena (KM)" required>
+            <input name="cpu" placeholder="CPU" required>
+            <input name="ram" placeholder="RAM" required>
+            <input name="storage" placeholder="Storage" required>
+            <input name="stock" type="number" placeholder="Na stanju (kom)" required>
+            <button type="submit">Spremi</button>
+        </form>
+        <p style="color:#94a3b8;font-size:.7rem;margin-top:.3rem;">* Podaci se čuvaju dok je aplikacija pokrenuta.</p>
+    </div>
+
+    <div class="table-card">
+        <table>
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Artikal</th>
+                <th>Cijena</th>
+                <th>CPU</th>
+                <th>RAM</th>
+                <th>Storage</th>
+                <th>Na stanju</th>
+                <th>Dodatci</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="l : ${laptops}">
+                <td data-label="#" th:text="${l.id}">1</td>
+                <td data-label="Artikal">
+                    <strong th:text="${l.brand} + ' ' + l.model">Lenovo IdeaPad 5</strong><br/>
+                    <span style="color:#94a3b8;font-size:.7rem;">ID: <span th:text="${l.id}">1</span></span>
+                </td>
+                <td data-label="Cijena" class="price" th:text="${l.price} + ' KM'">1350 KM</td>
+                <td data-label="CPU" th:text="${l.cpu}">i5-1240P</td>
+                <td data-label="RAM" th:text="${l.ram}">16GB</td>
+                <td data-label="Storage" th:text="${l.storage}">512GB SSD</td>
+                <td data-label="Na stanju">
+                    <span class="qty-pill" th:text="${l.stock} + ' kom'">0 kom</span>
+                </td>
+                <td data-label="Dodatci">
+                    <span th:if="${#lists.isEmpty(l.accessories)}" class="badge">nema</span>
+                    <span th:if="${!#lists.isEmpty(l.accessories)}" class="qty-pill"
+                          th:text="${#lists.size(l.accessories)} + ' kom'">2 kom</span>
+                </td>
+                <td data-label="Akcije">
+                    <a class="btn-open" th:href="@{'/laptops/action/' + ${l.id}}">Otvori</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
