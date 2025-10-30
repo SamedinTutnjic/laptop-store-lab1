@@ -4,8 +4,8 @@ Spring Boot MVC web aplikacija za evidenciju laptopa i dodatne opreme. Omogućav
 # 💻 Laptop Store – Spring Boot MVC (Lab 1)
 
 ## 👥 Članovi tima
-- **Samedin Tutnjić** – Student Softverskog inženjerstva, Univerzitet u Zenici  
-- **(unesi ime drugog člana ako ga imaš)**
+- **Samedin Tutnjić - vođa** 
+- **Feda Coloman**
 
 ---
 
