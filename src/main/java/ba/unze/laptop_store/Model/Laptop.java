@@ -1,5 +1,6 @@
 package ba.unze.laptop_store.Model;
 
+<<<<<<< HEAD
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +11,21 @@ public class Laptop {
     @Id
     private int id; // ostavljamo ručno dodjeljivanje ID-a
 
+=======
+import java.util.ArrayList;
+import java.util.List;
+
+public class Laptop {
+
+    private int id;
+>>>>>>> deb53d6bd067226775d752d00492276e94dcb9d4
     private String brand;
     private String model;
     private double price;
     private String cpu;
     private String ram;
     private String storage;
+<<<<<<< HEAD
     private int stock;
 
     // ✅ Veza: više laptopa može pripadati jednom customeru
@@ -29,6 +39,12 @@ public class Laptop {
 
     public Laptop() { }
 
+=======
+    private int stock; // broj komada na stanju
+
+    private List<Accessory> accessories = new ArrayList<>();
+
+>>>>>>> deb53d6bd067226775d752d00492276e94dcb9d4
     public Laptop(int id, String brand, String model, double price,
                   String cpu, String ram, String storage, int stock) {
         this.id = id;
@@ -41,6 +57,7 @@ public class Laptop {
         this.stock = stock;
     }
 
+<<<<<<< HEAD
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
@@ -72,5 +89,49 @@ public class Laptop {
     public List<Accessory> getAccessories() { return accessories; }
     public void addAccessory(Accessory accessory) {
         if (accessory != null) accessories.add(accessory);
+=======
+    public int getId() {
+        return id;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public String getCpu() {
+        return cpu;
+    }
+
+    public String getRam() {
+        return ram;
+    }
+
+    public String getStorage() {
+        return storage;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public List<Accessory> getAccessories() {
+        return accessories;
+    }
+
+    public void addAccessory(Accessory accessory) {
+        accessories.add(accessory);
+>>>>>>> deb53d6bd067226775d752d00492276e94dcb9d4
     }
 }
