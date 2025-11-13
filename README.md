@@ -1,10 +1,6 @@
-Naravno — mogu ti ovo prepravljati da izgleda **jednostavnije, ljudskije i kao da si ti lično pisao**, bez AI stila. Zadržat ću strukturu, ali ću skratiti objašnjenja i učiniti tekst prirodnijim.
-
----
-
 # 💻 Laptop Store – Spring Boot MVC & JPA (Lab 2)
 
-Projekt iz **Lab 1** je proširen i doveden na nivo **Lab 2** prema zahtjevima za predmet *Web programiranje*. U ovoj verziji je urađena potpuna integracija MVC-a, JPA-e i H2 baze.
+Projekt iz Lab 1 je proširen i doveden na nivo Lab 2 prema zahtjevima za Web programiranje. U ovoj verziji je urađena potpuna integracija MVC-a, JPA-e i H2 baze.
 
 ## 👥 Članovi tima
 
@@ -22,46 +18,41 @@ Projekt iz **Lab 1** je proširen i doveden na nivo **Lab 2** prema zahtjevima z
 
 # 🔥 Šta je urađeno u Labu 2
 
-U odnosu na prvu verziju, Lab 2 dodaje funkcionalnosti koje aplikaciju pretvaraju u pravi mali inventurni sistem.
+### ✔️ H2 in-memory baza
 
-### ✔️ 1. H2 in-memory baza
+Aplikacija koristi H2 bazu, automatski kreira tabele i puni ih početnim podacima.
 
-Aplikacija sada radi sa **H2 bazom**, automatski generiše tabele i puni ih početnim podacima.
-
-### ✔️ 2. Implementirani JPA entiteti
-
-Dodani su kompletni modeli:
+### ✔️ JPA entiteti
 
 #### 🧍 Customer
 
 * id, name, email, phone, city
-* novi entitet uveden tek u Labu 2
 
 #### 💻 Laptop
 
-* proširen JPA model
-* dodana veza prema kupcu: `@ManyToOne`
+* brand, model, cpu, ram, storage, price, stock
+* ManyToOne relacija prema kupcu
 
 #### 🎧 Accessory
 
-* ostaje jednostavni memorijski model
+* memorijski model
 
-### ✔️ 3. Relacija 1:N (Customer – Laptop)
+### ✔️ Relacija 1:N
 
-Jedan kupac može imati više laptopa.
-Laptop tabela sada sadrži `customer_id`.
+Kupac može imati više laptopa.
+Laptop sadrži `customer_id`.
 
-### ✔️ 4. REST API za kupce
+### ✔️ REST API
 
-Dostupno na /api/customers
+Ruta: `/api/customers`
 
 * GET – lista kupaca
-* GET/{id} – pojedinačni kupac
+* GET/{id} – jedan kupac
 * POST – dodavanje kupca
 
-### ✔️ 5. UI stranice za Customer
+### ✔️ UI za Customer
 
-Dodane su stranice za pregled, unos, uređivanje i brisanje kupaca.
+Stranice za pregled, dodavanje, uređivanje i brisanje kupaca.
 
 ---
 
@@ -69,26 +60,15 @@ Dodane su stranice za pregled, unos, uređivanje i brisanje kupaca.
 
 ## Customer
 
-* ID
-* Name
-* Email
-* Phone
-* City
+ID, Name, Email, Phone, City
 
 ## Laptop
 
-* Brand
-* Model
-* CPU
-* RAM
-* Storage
-* Price
-* Stock
-* Customer (ManyToOne)
+Brand, Model, CPU, RAM, Storage, Price, Stock, Customer
 
 ## Accessory
 
-Jednostavna lista dodatne opreme (memorijski model).
+Lista dodatne opreme (memorijski model).
 
 ---
 
@@ -97,36 +77,53 @@ Jednostavna lista dodatne opreme (memorijski model).
 H2 konzola:
 👉 `http://localhost:8080/h2-console`
 
-Parametri:
-
 ```
 JDBC URL: jdbc:h2:mem:laptop_store_db
 User: sa
-Pass: (prazno)
+Pass: 
 ```
 
-Početni podaci se dodaju u `DbSeed.java` (kupci + laptopi).
+Početni podaci se dodaju u `DbSeed.java`.
 
 ---
 
 # 🌐 REST – Customers
 
-| Metoda | Ruta                | Opis        |
-| ------ | ------------------- | ----------- |
-| GET    | /api/customers      | svi kupci   |
-| GET    | /api/customers/{id} | jedan kupac |
-| POST   | /api/customers      | dodavanje   |
+| Metoda | Ruta                | Opis            |
+| ------ | ------------------- | --------------- |
+| GET    | /api/customers      | svi kupci       |
+| GET    | /api/customers/{id} | jedan kupac     |
+| POST   | /api/customers      | dodavanje kupca |
 
 ---
 
 # 🎨 UI Stranice
 
-Aplikacija koristi moderniji i pregledniji prikaz za:
+* laptops.html
+* customers.html
+* customer-form.html
+* accessories.html
+* laptop-action.html
 
-* listu laptopa
-* listu kupaca
-* formu za dodavanje kupaca
-* dodatnu opremu
+---
+
+# 🖼️ Screenshoots
+
+## 📍 Customers – lista kupaca
+
+<img width="3420" height="1242" src="https://github.com/user-attachments/assets/8b5577b3-abed-4199-b935-9618ff54a725" />
+
+## 📍 Laptopi – inventura
+
+<img width="3415" height="1216" src="https://github.com/user-attachments/assets/bed97b90-9927-4048-bd45-665c44de7666" />
+
+## 📍 Accessories – inventura
+
+<img width="3401" height="1126" src="https://github.com/user-attachments/assets/fbdae889-b0c6-4207-b153-748a90d29cce" />
+
+## 📍 H2 Baza
+
+<img width="1388" height="677" src="https://github.com/user-attachments/assets/64651b46-1ced-4f55-a47a-ec6eeb7aef11" />
 
 ---
 
@@ -141,18 +138,3 @@ Laptopi:
 
 H2 baza:
 👉 `http://localhost:8080/h2-console`
-
----
-
-Ovim nadogradnjama projekt iz Lab 1 prerastao je u funkcionalnu **MVC + JPA web aplikaciju**, sa bazom, REST API-jem i kompletnim CRUD-om nad kupcima.
-
----
-
-Ako želiš, mogu ti uraditi i:
-
-✔ verziju za PDF format
-✔ verziju za README.md (GitHub)
-✔ potpuno kratku verziju
-✔ formalniju verziju za asistenta/profesora
-
-Samo reci koju želiš.
