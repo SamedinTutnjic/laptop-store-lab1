@@ -1,18 +1,3 @@
-Naravno — sada ćemo napraviti **potpuno novi README.md za Lab 2**, profesionalan, uredan i tačno prema onome što si implementirao:
-
-* **H2 baza**
-* **JPA entiteti (Customer + Laptop)**
-* **Relacija 1:N**
-* **REST API za kupce**
-* **MVC stranice za laptop, accessories i customers**
-* **Seed podaci (DbSeed)**
-* **Uređena inventura tema**
-* **Dodavanje, editovanje i brisanje kupaca**
-
-Spreman za copy–paste 👇👇
-
----
-
 # 💻 Laptop Store – Spring Boot MVC & JPA (Lab 2)
 
 Ovo je unapređena verzija projekta iz **Lab 1**, sada proširena i kompletirana prema zahtjevima za **Lab 2 – Web programiranje (UNZE)**.
@@ -194,21 +179,15 @@ Sve stranice imaju moderno uređenu inventura-temu:
 
 ## 📍 Customers – lista kupaca
 
-*(primjer ubaciš sliku nakon push-a, kao i za laptops)*
-
-```
-<img src="URL_SLIKE">
-```
+<img width="3420" height="1242" alt="Novi Klijent Page" src="https://github.com/user-attachments/assets/8b5577b3-abed-4199-b935-9618ff54a725" />
 
 ## 📍 Laptopi – inventura
 
-*(prethodna slika iz Lab 1 ostaje)*
+<img width="3415" height="1216" alt="Laptops Page" src="https://github.com/user-attachments/assets/bed97b90-9927-4048-bd45-665c44de7666" />
 
 ## 📍 Accessories – inventura
 
-*(prethodna slika ostaje)*
-
----
+<img width="3401" height="1126" alt="Oprema Page" src="https://github.com/user-attachments/assets/fbdae889-b0c6-4207-b153-748a90d29cce" />
 
 # ▶️ Pokretanje aplikacije
 
@@ -222,9 +201,9 @@ Stranica:
 H2 baza:
 👉 `http://localhost:8080/h2-console`
 
----
+<img width="1388" height="677" alt="Baza" src="https://github.com/user-attachments/assets/64651b46-1ced-4f55-a47a-ec6eeb7aef11" />
 
-# ✔️ Zaključak
+---
 
 U Lab 2 verziji aplikacija je unapređena u:
 
