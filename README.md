@@ -85,17 +85,6 @@ Dodane profesionalne stranice za:
 * uređivanje kupaca
 * brisanje kupaca
 
-Sve urađeno u modernoj inventura temi.
-
-### ✅ 6. **Kompletan redizajn UI**
-
-SVE stranice (laptops, accessories, customers) sada imaju:
-
-* Identican moderan header
-* Inventura stil
-* Sjene, kartice, button stilovi
-* Mobile-responsive dizajn
-
 ---
 
 # 🧩 Modeli i relacije
