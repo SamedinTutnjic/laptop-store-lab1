@@ -1,11 +1,14 @@
+Naravno — mogu ti ovo prepravljati da izgleda **jednostavnije, ljudskije i kao da si ti lično pisao**, bez AI stila. Zadržat ću strukturu, ali ću skratiti objašnjenja i učiniti tekst prirodnijim.
+
+---
+
 # 💻 Laptop Store – Spring Boot MVC & JPA (Lab 2)
 
-Ovo je unapređena verzija projekta iz **Lab 1**, sada proširena i kompletirana prema zahtjevima za **Lab 2 – Web programiranje (UNZE)**.
-Implementiran je potpuni **MVC + JPA + REST** sistem sa radom nad **H2 in-memory bazom**.
+Projekt iz **Lab 1** je proširen i doveden na nivo **Lab 2** prema zahtjevima za predmet *Web programiranje*. U ovoj verziji je urađena potpuna integracija MVC-a, JPA-e i H2 baze.
 
 ## 👥 Članovi tima
 
-* **Samedin Tutnjić** – vođa projekta
+* **Samedin Tutnjić**
 * **Feda Coloman**
 
 ---
@@ -13,83 +16,58 @@ Implementiran je potpuni **MVC + JPA + REST** sistem sa radom nad **H2 in-memory
 # 🏷️ Naziv aplikacije
 
 **Laptop Store – Evidencija laptopa, kupaca i dodatne opreme**
-(Lab 2 – Spring Boot + JPA + Thymeleaf)
+(Spring Boot + JPA + Thymeleaf)
 
 ---
 
-# 🔥 Šta je novo u Labu 2 (razlika u odnosu na Lab 1)
+# 🔥 Šta je urađeno u Labu 2
 
-U odnosu na Lab 1 (koji je bio DEMO bez baze i sa ručno definisanim podacima), Lab 2 donosi sljedeće nadogradnje:
+U odnosu na prvu verziju, Lab 2 dodaje funkcionalnosti koje aplikaciju pretvaraju u pravi mali inventurni sistem.
 
-### ✅ 1. **Uvedena H2 in-memory baza podataka**
+### ✔️ 1. H2 in-memory baza
 
-Aplikacija sada koristi:
+Aplikacija sada radi sa **H2 bazom**, automatski generiše tabele i puni ih početnim podacima.
 
-* **H2 memorijsku bazu**
-* automatsko kreiranje tabela preko JPA
-* automatsko punjenje početnih podataka (seed – DbSeed)
+### ✔️ 2. Implementirani JPA entiteti
 
-### ✅ 2. **Dodani JPA entiteti**
+Dodani su kompletni modeli:
 
-Implementirani entiteti:
+#### 🧍 Customer
 
-#### 🧍 Customer (NOVO u Lab 2)
+* id, name, email, phone, city
+* novi entitet uveden tek u Labu 2
 
-* `id`
-* `name`
-* `email`
-* `phone`
-* `city`
+#### 💻 Laptop
 
-#### 💻 Laptop (UNAPRIJEĐEN u Lab 2)
-
-Dodana JPA anotacija i relacija:
-
-* `@ManyToOne Customer customer`
-* `stock`
-* puni JPA model
+* proširen JPA model
+* dodana veza prema kupcu: `@ManyToOne`
 
 #### 🎧 Accessory
 
-Ostaje u memoriji, ali koristi se na formi za dodjelu dodataka laptopu.
+* ostaje jednostavni memorijski model
 
-### ✅ 3. **Relacija 1:N između Customer i Laptop**
+### ✔️ 3. Relacija 1:N (Customer – Laptop)
 
-* jedan kupac → može imati više laptopa
-* laptop ima kolonu `customer_id`
+Jedan kupac može imati više laptopa.
+Laptop tabela sada sadrži `customer_id`.
 
-Relacija je definisana u `Laptop.java`:
+### ✔️ 4. REST API za kupce
 
-```java
-@ManyToOne
-@JoinColumn(name = "customer_id")
-private Customer customer;
-```
+Dostupno na /api/customers
 
-### ✅ 4. **REST API za Customer entitet**
+* GET – lista kupaca
+* GET/{id} – pojedinačni kupac
+* POST – dodavanje kupca
 
-Putanja: `/api/customers`
+### ✔️ 5. UI stranice za Customer
 
-Podržava:
-
-* `GET /api/customers` – lista kupaca
-* `GET /api/customers/{id}` – pojedinačni kupac
-* `POST /api/customers` – dodavanje kupca
-
-### ✅ 5. **Customer MVC stranice (NEW UI)**
-
-Dodane profesionalne stranice za:
-
-* pregled kupaca
-* dodavanje kupaca
-* uređivanje kupaca
-* brisanje kupaca
+Dodane su stranice za pregled, unos, uređivanje i brisanje kupaca.
 
 ---
 
-# 🧩 Modeli i relacije
+# 🧩 Modeli
 
-## 🧍 **Customer (entitet)**
+## Customer
 
 * ID
 * Name
@@ -97,9 +75,8 @@ Dodane profesionalne stranice za:
 * Phone
 * City
 
-## 💻 **Laptop (entitet)**
+## Laptop
 
-* ID
 * Brand
 * Model
 * CPU
@@ -107,23 +84,17 @@ Dodane profesionalne stranice za:
 * Storage
 * Price
 * Stock
-* MANY-TO-ONE → Customer
+* Customer (ManyToOne)
 
-## 🎧 **Accessory (memorijski model)**
+## Accessory
 
-Oprema se čuva u memoriji i koristi u formi za dodjelu dodatka laptopu.
-
-### 🔗 **Relacija**
-
-* **Jedan Customer → više Laptopa**
-* Laptop ima `customer_id` u tabeli
+Jednostavna lista dodatne opreme (memorijski model).
 
 ---
 
-# 🗄️ H2 Baza podataka
+# 🗄️ H2 Baza
 
-Koristi se **H2 in-memory** baza, vidljiva na adresi:
-
+H2 konzola:
 👉 `http://localhost:8080/h2-console`
 
 Parametri:
@@ -134,71 +105,54 @@ User: sa
 Pass: (prazno)
 ```
 
-Baza se kreira pri pokretanju aplikacije i puni initial podacima iz `DbSeed.java`:
-
-* 2 kupca
-* 3 laptopa
-* relacija između laptopa i kupca
+Početni podaci se dodaju u `DbSeed.java` (kupci + laptopi).
 
 ---
 
-# 🌐 REST API – Customers
+# 🌐 REST – Customers
 
-| Metoda | Ruta                  | Opis              |
-| ------ | --------------------- | ----------------- |
-| GET    | `/api/customers`      | lista kupaca      |
-| GET    | `/api/customers/{id}` | pojedinačni kupac |
-| POST   | `/api/customers`      | dodavanje kupca   |
-
----
-
-# 🎨 UI – Stranice aplikacije
-
-Sve stranice imaju moderno uređenu inventura-temu:
-
-* `laptops.html`
-* `accessories.html`
-* `customers.html`
-* `customer-form.html`
-* `laptop-action.html`
+| Metoda | Ruta                | Opis        |
+| ------ | ------------------- | ----------- |
+| GET    | /api/customers      | svi kupci   |
+| GET    | /api/customers/{id} | jedan kupac |
+| POST   | /api/customers      | dodavanje   |
 
 ---
 
-# 🖼️ Screenshot (LAB 2 verzija)
+# 🎨 UI Stranice
 
-## 📍 Customers – lista kupaca
+Aplikacija koristi moderniji i pregledniji prikaz za:
 
-<img width="3420" height="1242" alt="Novi Klijent Page" src="https://github.com/user-attachments/assets/8b5577b3-abed-4199-b935-9618ff54a725" />
+* listu laptopa
+* listu kupaca
+* formu za dodavanje kupaca
+* dodatnu opremu
 
-## 📍 Laptopi – inventura
+---
 
-<img width="3415" height="1216" alt="Laptops Page" src="https://github.com/user-attachments/assets/bed97b90-9927-4048-bd45-665c44de7666" />
-
-## 📍 Accessories – inventura
-
-<img width="3401" height="1126" alt="Oprema Page" src="https://github.com/user-attachments/assets/fbdae889-b0c6-4207-b153-748a90d29cce" />
-
-# ▶️ Pokretanje aplikacije
+# ▶️ Pokretanje
 
 ```bash
 mvn spring-boot:run
 ```
 
-Stranica:
+Laptopi:
 👉 `http://localhost:8080/laptops`
 
 H2 baza:
 👉 `http://localhost:8080/h2-console`
 
-<img width="1388" height="677" alt="Baza" src="https://github.com/user-attachments/assets/64651b46-1ced-4f55-a47a-ec6eeb7aef11" />
+---
+
+Ovim nadogradnjama projekt iz Lab 1 prerastao je u funkcionalnu **MVC + JPA web aplikaciju**, sa bazom, REST API-jem i kompletnim CRUD-om nad kupcima.
 
 ---
 
-U Lab 2 verziji aplikacija je unapređena u:
+Ako želiš, mogu ti uraditi i:
 
-* **MVC + JPA + REST full-stack web aplikaciju**
-* sa potpunom bazom, entitetima i relacijama
-* modernim, responzivnim UI
-* kompletnim CRUD sistemom za kupce
-* i profesionalnim inventura izgledom
+✔ verziju za PDF format
+✔ verziju za README.md (GitHub)
+✔ potpuno kratku verziju
+✔ formalniju verziju za asistenta/profesora
 
+Samo reci koju želiš.
