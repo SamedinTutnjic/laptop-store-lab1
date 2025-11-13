@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="bs">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">Novi kupac</title>
+
+    <style>
+        :root {
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --line: #e5e7eb;
+            --text: #0f172a;
+            --muted: #6b7280;
+            --accent: #2563eb;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        /* Header */
+        header {
+            background:#fff;
+            border-bottom:1px solid #e5e7eb;
+            padding:.9rem 1.5rem;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            position:sticky;
+            top:0;
+            z-index:10;
+        }
+        .brand { font-weight:600; }
+
+        nav a {
+            text-decoration:none;
+            color:#475569;
+            margin-left:1rem;
+        }
+        nav a.active {
+            color:var(--accent);
+            font-weight:600;
+        }
+
+        /* Layout */
+        .wrapper {
+            max-width: 650px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: .9rem;
+            padding: 1.4rem 1.6rem;
+            box-shadow: 0 10px 30px rgba(15,23,42,.03);
+        }
+
+        h1 {
+            font-size: 1.3rem;
+            margin: 0 0 .4rem;
+        }
+        .sub {
+            color: var(--muted);
+            font-size: .85rem;
+            margin-bottom: 1.2rem;
+        }
+
+        /* Forma */
+        label {
+            display:block;
+            margin-bottom:.25rem;
+            font-size:.82rem;
+            color:var(--muted);
+            font-weight:500;
+        }
+
+        input {
+            width:100%;
+            padding:.55rem .75rem;
+            border:1px solid #d1d5db;
+            border-radius:.5rem;
+            font-size:.9rem;
+            background:white;
+        }
+        input:focus {
+            outline:none;
+            border-color:var(--accent);
+            box-shadow:0 0 0 1px rgba(37,99,235,.3);
+        }
+
+        .row { display:flex; gap: .9rem; }
+
+        /* Buttons */
+        .btn-main {
+            background: var(--accent);
+            color:white;
+            padding:.6rem 1.1rem;
+            border:none;
+            border-radius:.55rem;
+            font-size:.9rem;
+            cursor:pointer;
+            font-weight:500;
+            transition: background .2s ease, transform .1s ease;
+        }
+        .btn-main:hover {
+            background:#1e40af;
+            transform:scale(1.02);
+        }
+
+        .btn-secondary {
+            background:#e5e7eb;
+            color:#374151;
+            border:none;
+            border-radius:.55rem;
+            padding:.6rem 1.1rem;
+            font-size:.9rem;
+            font-weight:500;
+            margin-left:.5rem;
+            text-decoration:none;
+            display:inline-block;
+            transition: background .2s ease;
+        }
+        .btn-secondary:hover {
+            background:#d1d5db;
+        }
+
+        @media(max-width: 650px){
+            .row { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="brand">Laptop Store · Inventura</div>
+    <nav>
+        <a th:href="@{/laptops}">Laptops</a>
+        <a th:href="@{/accessories}">Accessories</a>
+        <a th:href="@{/customers}" class="active">Customers</a>
+    </nav>
+</header>
+
+<div class="wrapper">
+    <div class="card">
+
+        <h1 th:text="${title}">Novi kupac</h1>
+        <p class="sub">Popuni podatke za novog kupca i spremi ih u inventurnu evidenciju.</p>
+
+        <form th:action="${action}" method="post" th:object="${customer}">
+
+            <label>Ime i prezime</label>
+            <input th:field="*{name}" placeholder="npr. Amina Avdić" required>
+
+            <div class="row">
+                <div style="flex:1;">
+                    <label>Email</label>
+                    <input th:field="*{email}" type="email" placeholder="amina@example.com" required>
+                </div>
+                <div style="flex:1;">
+                    <label>Telefon</label>
+                    <input th:field="*{phone}" placeholder="061-111-222">
+                </div>
+            </div>
+
+            <label>Grad</label>
+            <input th:field="*{city}" placeholder="Zenica">
+
+            <div style="margin-top:1.3rem;">
+                <button class="btn-main" type="submit" th:text="${submit}">Spremi</button>
+                <a class="btn-secondary" th:href="@{/customers}">Nazad</a>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>

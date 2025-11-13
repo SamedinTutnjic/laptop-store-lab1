@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="bs">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventura – Customers</title>
+    <style>
+        :root {
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --line: #e5e7eb;
+            --text: #0f172a;
+            --muted: #6b7280;
+            --accent: #2563eb;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        header {
+            background:#fff;
+            border-bottom:1px solid #e5e7eb;
+            padding:.9rem 1.5rem;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            position: sticky;
+            top:0;
+            z-index:10;
+        }
+        .brand { font-weight: 600; }
+
+        nav a {
+            text-decoration:none;
+            color:#475569;
+            margin-left:1rem;
+        }
+        nav a.active {
+            color:var(--accent);
+            font-weight:600;
+        }
+
+        .wrapper {
+            max-width: 900px;
+            margin: 1.7rem auto 2.2rem;
+            padding: 0 1.1rem;
+        }
+        .head-row {
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:.6rem;
+        }
+        h1 { margin:0; font-size:1.4rem; }
+        p.sub { color:var(--muted); font-size:.85rem; margin:.3rem 0 0; }
+
+        .btn-main {
+            background: var(--accent);
+            color:#fff;
+            border:none;
+            border-radius:.5rem;
+            padding:.45rem .95rem;
+            font-size:.86rem;
+            font-weight:500;
+            text-decoration:none;
+            cursor:pointer;
+            transition: background .2s ease, transform .1s ease;
+        }
+        .btn-main:hover {
+            background:#1e40af;
+            transform:scale(1.02);
+        }
+
+        .card-table {
+            background:#fff;
+            border:1px solid #e5e7eb;
+            border-radius:.9rem;
+            overflow:hidden;
+            box-shadow:0 10px 30px rgba(15,23,42,.03);
+        }
+
+        table { width:100%; border-collapse:collapse; }
+        thead { background:#f8fafc; }
+        th, td {
+            padding:.65rem .8rem;
+            border-bottom:1px solid #edf2f7;
+            text-align:left;
+            font-size:.86rem;
+        }
+        th {
+            font-size:.72rem;
+            text-transform:uppercase;
+            letter-spacing:.04em;
+            color:#94a3b8;
+        }
+        tbody tr:last-child td { border-bottom:none; }
+        tbody tr:hover { background:#eff6ff; }
+
+        .email { color:#2563eb; font-size:.86rem; }
+        .city-pill {
+            display:inline-block;
+            background:rgba(37,99,235,.06);
+            color:#1d4ed8;
+            padding:.12rem .6rem;
+            border-radius:999px;
+            font-size:.7rem;
+        }
+
+        .actions a,
+        .actions button {
+            font-size:.8rem;
+            color:#2563eb;
+            background:none;
+            border:none;
+            padding:0;
+            margin-right:.4rem;
+            cursor:pointer;
+            text-decoration:none;
+        }
+        .actions button {
+            color:#ef4444;
+        }
+        .actions a:hover,
+        .actions button:hover {
+            text-decoration:underline;
+        }
+
+        form.inline { display:inline; }
+
+        @media (max-width: 800px) {
+            table, thead, tbody, tr, th, td { display:block; }
+            thead { display:none; }
+            td {
+                padding:.5rem 1rem;
+                border-bottom:1px solid #e5e7eb;
+            }
+            td::before {
+                content: attr(data-label);
+                display:block;
+                font-size:.65rem;
+                text-transform:uppercase;
+                color:#94a3b8;
+            }
+            tbody tr:last-child td { border-bottom:none; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="brand">Laptop Store · Inventura</div>
+    <nav>
+        <a th:href="@{/laptops}">Laptops</a>
+        <a th:href="@{/accessories}">Accessories</a>
+        <a th:href="@{/customers}" class="active">Customers</a>
+    </nav>
+</header>
+
+<div class="wrapper">
+    <div class="head-row">
+        <div>
+            <h1>Klijenti</h1>
+            <p class="sub">Evidencija kupaca koji su povezani sa narudžbama i modelima laptopa.</p>
+        </div>
+        <a class="btn-main" th:href="@{/customers/new}">+ Novi kupac</a>
+    </div>
+
+    <div class="card-table">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Ime i prezime</th>
+                <th>Email</th>
+                <th>Telefon</th>
+                <th>Grad</th>
+                <th>Akcije</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="c : ${customers}">
+                <td data-label="ID" th:text="${c.id}">1</td>
+                <td data-label="Ime i prezime" th:text="${c.name}">Amina Avdić</td>
+                <td data-label="Email">
+                    <span class="email" th:text="${c.email}">amina@example.com</span>
+                </td>
+                <td data-label="Telefon" th:text="${c.phone}">061-111-222</td>
+                <td data-label="Grad">
+                    <span class="city-pill" th:text="${c.city}">Zenica</span>
+                </td>
+                <td data-label="Akcije" class="actions">
+                    <a th:href="@{'/customers/edit/' + ${c.id}}">Uredi</a>
+                    <form class="inline"
+                          th:action="@{'/customers/delete/' + ${c.id}}"
+                          method="post"
+                          onsubmit="return confirm('Obrisati ovog kupca?');">
+                        <button type="submit">Obriši</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
