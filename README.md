@@ -1,78 +1,67 @@
-# Laptop-Prodavnica-Accessory
-Spring Boot MVC web aplikacija za evidenciju laptopa i dodatne opreme. Omogućava pregled, dodavanje i upravljanje artiklima kroz jednostavan interfejs. Izrađeno kao laboratorijski zadatak (Lab 1) za predmet Web programiranje – UNZE.
+💻 Laptop Store – Spring Boot MVC & JPA (Lab 2)
 
-# 💻 Laptop Store – Spring Boot MVC (Lab 1)
+Ovo je unapređena verzija projekta iz Lab 1, sada proširena i kompletirana prema zahtjevima za Lab 2 – Web programiranje (UNZE).
+Implementiran je potpuni MVC + JPA + REST sistem sa radom nad H2 in-memory bazom.
 
-## 👥 Članovi tima
-- **Samedin Tutnjić - vođa** 
-- **Feda Coloman**
+👥 Članovi tima
 
----
+Samedin Tutnjić – vođa projekta
 
-## 🏷️ Naziv aplikacije
-**Laptop Store – Evidencija laptopa i dodatne opreme**
+Feda Coloman
 
-Ova aplikacija je izrađena u okviru laboratorijske vježbe **Lab 1 – Web programiranje** na temu **primjene MVC (Model–View–Controller)** arhitekture koristeći **Spring Boot** i **Thymeleaf**.
+🏷️ Naziv aplikacije
 
----
+Laptop Store – Evidencija laptopa, kupaca i dodatne opreme
+(Lab 2 – Spring Boot + JPA + Thymeleaf)
 
-## 🧩 Opis modela i relacije
+🔥 Šta je novo u Labu 2 (razlika u odnosu na Lab 1)
 
-Aplikacija sadrži dva osnovna modela:
+U odnosu na Lab 1 (koji je bio DEMO bez baze i sa ručno definisanim podacima), Lab 2 donosi sljedeće nadogradnje:
 
-### 🖥️ **Model: Laptop**
-Predstavlja osnovnu jedinicu evidencije – laptop u prodavnici.  
-Sadrži podatke o:
-- ID laptopa (`id`)
-- Brendu i modelu (`brand`, `model`)
-- Procesoru, RAM-u i disku (`cpu`, `ram`, `storage`)
-- Cijeni (`price`)
-- Broju komada na stanju (`stock`)
-- Listi dodatne opreme (`List<Accessory>`)
+✅ 1. Uvedena H2 in-memory baza podataka
 
-Svaki laptop može imati **više dodataka (1:N relacija)**.
+Aplikacija sada koristi:
 
----
+H2 memorijsku bazu
 
-### 🎧 **Model: Accessory**
-Predstavlja dodatnu opremu (miš, torba, docking station itd.).  
-Sadrži:
-- ID dodatka (`id`)
-- Naziv, tip, brend (`name`, `type`, `brand`)
-- Cijenu (`price`)
+automatsko kreiranje tabela preko JPA
 
----
+automatsko punjenje početnih podataka (seed – DbSeed)
 
-### 🔗 **Relacija između modela**
-- Jedan **Laptop** može imati više **Accessory** objekata  
-  → **(1 : N relacija)**  
-- Dodatci se dodaju kroz formu na stranici *“Upravljaj / Otvori”*
+✅ 2. Dodani JPA entiteti
 
----
+Implementirani entiteti:
 
-## ⚙️ Funkcionalnosti aplikacije
-- Pregled liste laptopa i njihove količine na stanju  
-- Pregled liste dodatne opreme  
-- Dodavanje novih laptopa i accessories kroz forme  
-- Dodavanje opreme pojedinačnom laptopu  
-- Brz pregled (“Otvori”) svakog laptopa  
-- Podaci se čuvaju **u memoriji (DemoData komponenta)** – bez baze podataka
+🧍 Customer (NOVO u Lab 2)
 
----
+id
 
-## 🖼️ Screenshot aplikacije
+name
 
-### 💻 Glavna stranica – *Lista laptopa*
+email
 
-<img width="3433" height="938" alt="Slika 1" src="https://github.com/user-attachments/assets/c8a436cb-702e-4d9c-bcf2-bf5668103fe1" />
+phone
 
-### 💻 Stranica – *Lista Accessory*
+city
 
-<img width="3437" height="735" alt="Slika 2" src="https://github.com/user-attachments/assets/3d53cf85-44ca-45cc-b275-4566d2b5687c" />
+💻 Laptop (UNAPRIJEĐEN u Lab 2)
 
-### 💻 Stranica – *Stavke*
+Dodana JPA anotacija i relacija:
 
-<img width="3433" height="684" alt="Slika 1 1" src="https://github.com/user-attachments/assets/f3a315c3-7fb5-4f5e-b61c-c2b6e6e05d49" />
+@ManyToOne Customer customer
 
+stock
 
+puni JPA model
 
+🎧 Accessory
+
+Ostaje u memoriji, ali koristi se na formi za dodjelu dodataka laptopu.
+
+✅ 3. Relacija 1:N između Customer i Laptop
+
+jedan kupac → može imati više laptopa
+
+laptop ima kolonu customer_id
+
+Relacija je definisana u Laptop.java:
